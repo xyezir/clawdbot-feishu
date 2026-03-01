@@ -699,7 +699,7 @@ export async function handleFeishuMessage(params: {
       channel: "feishu",
       accountId: account.accountId,
       peer: {
-        kind: isGroup ? "group" : "direct",
+        kind: isGroup ? "group" : "dm",
         id: peerId,
       },
     });
@@ -716,6 +716,7 @@ export async function handleFeishuMessage(params: {
           runtime,
           senderOpenId: ctx.senderOpenId,
           dynamicCfg,
+          accountId: account.accountId,
           log: (msg) => log(msg),
         });
         if (result.created) {
@@ -725,7 +726,7 @@ export async function handleFeishuMessage(params: {
             cfg: result.updatedCfg,
             channel: "feishu",
             accountId: account.accountId,
-            peer: { kind: "dm", id: ctx.senderOpenId },
+            peer: { kind: "direct", id: ctx.senderOpenId },
           });
           log(`feishu[${account.accountId}]: dynamic agent created, new route: ${route.sessionKey}`);
         }
